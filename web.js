@@ -9,11 +9,14 @@ fs.readFile('./index.html',function read(err,data) {
    }
    content = data.toString();
 
-});
+console.log("content is " + content);
 
    app.get('/', function(request, response) {
-     response.send(content);
+//     response.send(content);
+     response.send('Hello');
    });
+
+});
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
