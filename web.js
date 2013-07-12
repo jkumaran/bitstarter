@@ -7,12 +7,13 @@ fs.readFile('./index.html',function read(err,data) {
    if (err) {
       throw err;
    }
-   content = data;
+   content = data.toString();
+
+});
 
    app.get('/', function(request, response) {
-     response.send(content.toString('utf-8'));
+     response.send(content);
    });
-});
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
