@@ -13,8 +13,8 @@ fs.readFile('./index.html',function read(err,data) {
 console.log("content is " + content);
 
    app.get('/', function(request, response) {
-//     response.send(content);
-     response.send('Hello');
+     response.send(content);
+//     response.send('Hello');
    });
 
 });
