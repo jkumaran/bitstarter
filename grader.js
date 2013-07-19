@@ -59,13 +59,19 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 
 var buildfn = function(checksfile) {
  var urlProcess = function(result, response) {
-    $ = cheerio.load(result);
-    var checks = loadChecks(checksfile).sort();
     var out = {};
-    for(var ii in checks) {
-        var present = $(checks[ii]).length > 0;
-        out[checks[ii]] = present;
+    if (result instanceof Error) {
+	console.error('Error: ' + util.format(response.message));
+    } else {
+       $ = cheerio.load(result);
+       var checks = loadChecks(checksfile).sort();
+       for(var ii in checks) {
+           var present = $(checks[ii]).length > 0;
+           out[checks[ii]] = present;
+       }
     }
+    var outJson = JSON.stringify(out, null, 4);
+    console.log(outJson);
     return out;    
  };
  return urlProcess;
@@ -91,12 +97,12 @@ if(require.main == module) {
         .parse(process.argv);
     var checkJson;
     if (program.url.length > 0) {
-       checkJson = checkUrl(program.url, program.checks);
+       checkUrl(program.url, program.checks);
     } else {
        checkJson = checkHtmlFile(program.file, program.checks);
+       var outJson = JSON.stringify(checkJson, null, 4);
+       console.log(outJson);
     }
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
