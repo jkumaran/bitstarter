@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var express = require('express');
 
 var app = express.createServer(express.logger());
@@ -10,7 +12,7 @@ fs.readFile('./index.html',function read(err,data) {
    }
    content = data.toString();
 
-console.log("content is " + content);
+//console.log("content is " + content);
 
    app.get('/', function(request, response) {
      response.send(content);
@@ -19,7 +21,7 @@ console.log("content is " + content);
 
 });
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
